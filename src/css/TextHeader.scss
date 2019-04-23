@@ -1,0 +1,53 @@
+
+@font-face{
+    font-family: 'Revenant';
+    src:url('Revenant.otf');
+    
+        
+}
+
+.neon {
+    position: relative;      
+    top: 80px;
+    left: calc(50%);
+    transform: translate(-50%, -50%); 
+    margin: 0px; 
+    color: #fff;       
+    padding: 20px;
+    font-size: 4.5vmax;   
+    z-index: 1;
+    font-family: Revenant;
+
+    
+
+    text-shadow: 0 0 50px aliceblue;  
+    &.violet{text-shadow: 0 0 50px violet;}
+    &.indigo{text-shadow: 0 0 50px indigo;}
+    &.blue{text-shadow: 0 0 50px blue;}
+    &.green{text-shadow: 0 0 50px green;}
+    &.yellow{text-shadow: 0 0 50px yellow;}
+    &.orange{text-shadow: 0 0 50px orange;}
+    &.red{text-shadow: 0 0 50px red;}
+}
+.light {
+    content: "";    
+    font-size: calc(70px + 1vmin); 
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 250%; 
+    position: absolute; 
+    z-index: -2; 
+    opacity: 0.5; 
+     
+    filter: blur(40px);
+
+    background: deepskyblue;
+    &.violet{background: rgba(235, 149, 235, 0.5);}
+    &.indigo{background: rgba(159, 86, 211, 0.5);}
+    &.blue{background:rgba(69, 69, 243, 0.5);}
+    &.green{background:rgba(63, 195, 63, 0.5);}
+    &.yellow{background: rgba(255, 255, 125, 0.5);}
+    &.orange{background:rgba(255, 194, 80, 0.5);}
+    &.red{background:rgba(255, 71, 71, 0.5);}
+}
