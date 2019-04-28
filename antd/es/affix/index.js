@@ -36,7 +36,6 @@ import classNames from 'classnames';
 import omit from 'omit.js';
 import { ConfigConsumer } from '../config-provider';
 import { throttleByAnimationFrameDecorator } from '../_util/throttleByAnimationFrame';
-import ResizeObserver from '../_util/resizeObserver';
 import warning from '../_util/warning';
 import { addObserveTarget, removeObserveTarget, getTargetRect } from './utils';
 
@@ -158,11 +157,7 @@ function (_React$Component) {
           style = _this$props2.style,
           children = _this$props2.children;
       var className = classNames(_defineProperty({}, getPrefixCls('affix', prefixCls), affixStyle));
-      var props = omit(_this.props, ['prefixCls', 'offsetTop', 'offsetBottom', 'target', 'onChange']); // Omit this since `onTestUpdatePosition` only works on test.
-
-      if (process.env.NODE_ENV === 'test') {
-        props = omit(props, ['onTestUpdatePosition']);
-      }
+      var props = omit(_this.props, ['prefixCls', 'offsetTop', 'offsetBottom', 'target', 'onChange']);
 
       var mergedPlaceholderStyle = _extends({}, status === AffixStatus.None ? placeholderStyle : null, style);
 
@@ -173,9 +168,7 @@ function (_React$Component) {
         className: className,
         ref: _this.saveFixedNode,
         style: _this.state.affixStyle
-      }, React.createElement(ResizeObserver, {
-        onResize: _this.updatePosition
-      }, children)));
+      }, children));
     };
 
     return _this;
@@ -238,15 +231,7 @@ function (_React$Component) {
         status: AffixStatus.Prepare,
         affixStyle: undefined,
         placeholderStyle: undefined
-      }); // Test if `updatePosition` called
-
-      if (process.env.NODE_ENV === 'test') {
-        var onTestUpdatePosition = this.props.onTestUpdatePosition;
-
-        if (onTestUpdatePosition) {
-          onTestUpdatePosition();
-        }
-      }
+      });
     }
   }, {
     key: "render",

@@ -1,5 +1,3 @@
 import '../../style/index.css';
-import './index.css'; // style dependencies
-
+import './index.css';
 import '../../select/style/css';
-import '../../input/style/css';

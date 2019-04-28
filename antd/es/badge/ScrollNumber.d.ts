@@ -28,8 +28,26 @@ declare class ScrollNumber extends Component<ScrollNumberProps, ScrollNumberStat
     getPositionByNum(num: number, i: number): number;
     componentDidUpdate(_: any, prevState: ScrollNumberState): void;
     renderNumberList(position: number): React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)> | null) | (new (props: any) => React.Component<any, any, any>)>[];
-    renderCurrentNumber(prefixCls: string, num: number | string, i: number): JSX.Element;
-    renderNumberElement(prefixCls: string): string | number | JSX.Element[] | null | undefined;
+    renderCurrentNumber(prefixCls: string, num: number, i: number): React.DetailedReactHTMLElement<{
+        className: string;
+        style: {
+            transition: string | undefined;
+            msTransform: string;
+            WebkitTransform: string;
+            transform: string;
+        };
+        key: number;
+    }, HTMLElement>;
+    renderNumberElement(prefixCls: string): string | number | React.DetailedReactHTMLElement<{
+        className: string;
+        style: {
+            transition: string | undefined;
+            msTransform: string;
+            WebkitTransform: string;
+            transform: string;
+        };
+        key: number;
+    }, HTMLElement>[] | null | undefined;
     renderScrollNumber: ({ getPrefixCls }: ConfigConsumerProps) => React.ReactElement<any, string | ((props: any) => React.ReactElement<any, string | any | (new (props: any) => React.Component<any, any, any>)> | null) | (new (props: any) => React.Component<any, any, any>)>;
     render(): JSX.Element;
 }

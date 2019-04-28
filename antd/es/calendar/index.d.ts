@@ -31,6 +31,7 @@ declare class Calendar extends React.Component<CalendarProps, CalendarState> {
     static defaultProps: {
         locale: {};
         fullscreen: boolean;
+        mode: CalendarMode;
         onSelect: typeof noop;
         onPanelChange: typeof noop;
         onChange: typeof noop;
@@ -56,8 +57,9 @@ declare class Calendar extends React.Component<CalendarProps, CalendarState> {
     monthCellRender: (value: moment.Moment) => JSX.Element;
     dateCellRender: (value: moment.Moment) => JSX.Element;
     setValue: (value: moment.Moment, way: "select" | "changePanel") => void;
+    setType: (type: string) => void;
     onHeaderValueChange: (value: moment.Moment) => void;
-    onHeaderTypeChange: (mode: CalendarMode) => void;
+    onHeaderTypeChange: (type: string) => void;
     onPanelChange(value: moment.Moment, mode: CalendarMode | undefined): void;
     onSelect: (value: moment.Moment) => void;
     getDateRange: (validRange: [moment.Moment, moment.Moment], disabledDate?: ((current: moment.Moment) => boolean) | undefined) => (current: moment.Moment) => boolean;

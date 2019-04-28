@@ -142,7 +142,6 @@ function (_React$Component) {
 
         case 'small':
           sizeCls = 'sm';
-          break;
 
         default:
           break;
@@ -172,7 +171,7 @@ function (_React$Component) {
           otherProps = __rest(_b, ["htmlType"]);
 
       return React.createElement(Wave, null, React.createElement("button", _extends({}, otherProps, {
-        type: htmlType,
+        type: htmlType || 'button',
         className: classes,
         onClick: _this.handleClick,
         ref: _this.saveButtonRef
@@ -280,8 +279,7 @@ Button.__ANT_BUTTON = true;
 Button.defaultProps = {
   loading: false,
   ghost: false,
-  block: false,
-  htmlType: 'button'
+  block: false
 };
 Button.propTypes = {
   type: PropTypes.string,

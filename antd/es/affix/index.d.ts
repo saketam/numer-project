@@ -40,7 +40,7 @@ declare class Affix extends React.Component<AffixProps, AffixState> {
     componentWillUnmount(): void;
     savePlaceholderNode: (node: HTMLDivElement) => void;
     saveFixedNode: (node: HTMLDivElement) => void;
-    updatePosition(e?: Event): void;
+    updatePosition(e: Event): void;
     measure: () => void;
     renderAffix: ({ getPrefixCls }: ConfigConsumerProps) => JSX.Element;
     render(): JSX.Element;

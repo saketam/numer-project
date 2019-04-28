@@ -12,9 +12,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -34,6 +34,7 @@ var __rest = this && this.__rest || function (s, e) {
 };
 
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import Icon from '../icon';
 import classNames from 'classnames';
 import { ConfigConsumer } from '../config-provider';
@@ -55,24 +56,23 @@ function (_React$Component) {
     };
 
     _this.setScale = function () {
-      if (!_this.avatarChildren || !_this.avatarNode) {
-        return;
+      var childrenNode = _this.avatarChildren;
+
+      if (childrenNode) {
+        var childrenWidth = childrenNode.offsetWidth;
+        var avatarNode = ReactDOM.findDOMNode(_assertThisInitialized(_this));
+        var avatarWidth = avatarNode.getBoundingClientRect().width; // add 4px gap for each side to get better performance
+
+        if (avatarWidth - 8 < childrenWidth) {
+          _this.setState({
+            scale: (avatarWidth - 8) / childrenWidth
+          });
+        } else {
+          _this.setState({
+            scale: 1
+          });
+        }
       }
-
-      var childrenWidth = _this.avatarChildren.offsetWidth; // offsetWidth avoid affecting be transform scale
-
-      var nodeWidth = _this.avatarNode.offsetWidth; // denominator is 0 is no meaning
-
-      if (childrenWidth === 0 || nodeWidth === 0 || _this.lastChildrenWidth === childrenWidth && _this.lastNodeWidth === nodeWidth) {
-        return;
-      }
-
-      _this.lastChildrenWidth = childrenWidth;
-      _this.lastNodeWidth = nodeWidth; // add 4px gap for each side to get better performance
-
-      _this.setState({
-        scale: nodeWidth - 8 < childrenWidth ? (nodeWidth - 8) / childrenWidth : 1
-      });
     };
 
     _this.handleImgLoadError = function () {
@@ -142,16 +142,16 @@ function (_React$Component) {
           } : {};
           children = React.createElement("span", {
             className: "".concat(prefixCls, "-string"),
-            ref: function ref(node) {
-              return _this.avatarChildren = node;
+            ref: function ref(span) {
+              return _this.avatarChildren = span;
             },
             style: _extends({}, sizeChildrenStyle, childrenStyle)
           }, children);
         } else {
           children = React.createElement("span", {
             className: "".concat(prefixCls, "-string"),
-            ref: function ref(node) {
-              return _this.avatarChildren = node;
+            ref: function ref(span) {
+              return _this.avatarChildren = span;
             }
           }, children);
         }
@@ -159,10 +159,7 @@ function (_React$Component) {
 
       return React.createElement("span", _extends({}, others, {
         style: _extends({}, sizeStyle, others.style),
-        className: classString,
-        ref: function ref(node) {
-          return _this.avatarNode = node;
-        }
+        className: classString
       }), children);
     };
 
@@ -176,8 +173,10 @@ function (_React$Component) {
     }
   }, {
     key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      this.setScale();
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (prevProps.children !== this.props.children || prevState.scale !== this.state.scale && this.state.scale === 1 || prevState.isImgExist !== this.state.isImgExist) {
+        this.setScale();
+      }
 
       if (prevProps.src !== this.props.src) {
         this.setState({

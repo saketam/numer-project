@@ -11,8 +11,12 @@
 /* stylelint-disable */
 /* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
 /* stylelint-disable at-rule-no-unknown */
+#root{
+  padding: 0px;
+}
 html,
 body {
+  
   width: 100%;
   height: 100%;
 }
@@ -210,6 +214,7 @@ textarea {
       touch-action: manipulation;
 }
 table {
+  color: #000;
   border-collapse: collapse;
 }
 caption {
@@ -14190,7 +14195,7 @@ textarea.ant-time-picker-input {
   outline: none;
   -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 .ant-dropdown-menu-item-group-title {
   padding: 5px 12px;
@@ -18356,9 +18361,9 @@ textarea.ant-mention-wrapper .ant-mention-editor {
           box-shadow: 0 0 8px rgba(0, 0, 0, 0.15) \9;
 }
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-  .ant-popover {
-    /* IE10+ */
-  }
+  /* .ant-popover {
+    /* IE10+
+  } */
   .ant-popover-inner {
     -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -19840,7 +19845,7 @@ textarea.ant-mention-wrapper .ant-mention-editor {
   border-collapse: collapse;
 }
 .ant-table-thead > tr > th {
-  color: rgba(0, 0, 0, 0.85);
+  color: rgba(0, 0, 0,1);
   font-weight: 500;
   text-align: left;
   background: #fafafa;
@@ -20017,7 +20022,7 @@ textarea.ant-mention-wrapper .ant-mention-editor {
 .ant-table-tbody > tr.ant-table-row-hover:not(.ant-table-expanded-row) > td,
 .ant-table-thead > tr:hover:not(.ant-table-expanded-row) > td,
 .ant-table-tbody > tr:hover:not(.ant-table-expanded-row) > td {
-  background: #e6f7ff;
+  background: rgba(255, 255, 255, 0.377);
 }
 .ant-table-thead > tr:hover {
   background: none;

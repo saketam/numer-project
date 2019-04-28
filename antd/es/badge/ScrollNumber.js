@@ -27,8 +27,7 @@ import { polyfill } from 'react-lifecycles-compat';
 
 function getNumberArray(num) {
   return num ? num.toString().split('').reverse().map(function (i) {
-    var current = Number(i);
-    return isNaN(current) ? i : current;
+    return Number(i);
   }) : [];
 }
 
@@ -91,18 +90,14 @@ function (_Component) {
   _createClass(ScrollNumber, [{
     key: "getPositionByNum",
     value: function getPositionByNum(num, i) {
-      var count = this.state.count;
-      var currentCount = Math.abs(Number(count));
-      var lastCount = Math.abs(Number(this.lastCount));
-      var currentDigit = Math.abs(getNumberArray(this.state.count)[i]);
-      var lastDigit = Math.abs(getNumberArray(this.lastCount)[i]);
-
       if (this.state.animateStarted) {
         return 10 + num;
-      } // 同方向则在同一侧切换数字
+      }
 
+      var currentDigit = getNumberArray(this.state.count)[i];
+      var lastDigit = getNumberArray(this.lastCount)[i]; // 同方向则在同一侧切换数字
 
-      if (currentCount > lastCount) {
+      if (Number(this.state.count) > Number(this.lastCount)) {
         if (currentDigit >= lastDigit) {
           return 10 + num;
         }
@@ -119,15 +114,17 @@ function (_Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(_, prevState) {
-      this.lastCount = prevState.count;
-      var animateStarted = this.state.animateStarted;
-      var onAnimated = this.props.onAnimated;
+      var _this2 = this;
 
-      if (animateStarted) {
+      this.lastCount = prevState.count;
+
+      if (this.state.animateStarted) {
         this.setState({
           animateStarted: false,
           count: this.props.count
         }, function () {
+          var onAnimated = _this2.props.onAnimated;
+
           if (onAnimated) {
             onAnimated();
           }
@@ -152,36 +149,29 @@ function (_Component) {
   }, {
     key: "renderCurrentNumber",
     value: function renderCurrentNumber(prefixCls, num, i) {
-      if (typeof num === 'number') {
-        var position = this.getPositionByNum(num, i);
-        var removeTransition = this.state.animateStarted || getNumberArray(this.lastCount)[i] === undefined;
-        return createElement('span', {
-          className: "".concat(prefixCls, "-only"),
-          style: {
-            transition: removeTransition ? 'none' : undefined,
-            msTransform: "translateY(".concat(-position * 100, "%)"),
-            WebkitTransform: "translateY(".concat(-position * 100, "%)"),
-            transform: "translateY(".concat(-position * 100, "%)")
-          },
-          key: i
-        }, this.renderNumberList(position));
-      }
-
-      return React.createElement("span", {
-        key: "symbol",
-        className: "".concat(prefixCls, "-symbol")
-      }, num);
+      var position = this.getPositionByNum(num, i);
+      var removeTransition = this.state.animateStarted || getNumberArray(this.lastCount)[i] === undefined;
+      return createElement('span', {
+        className: "".concat(prefixCls, "-only"),
+        style: {
+          transition: removeTransition ? 'none' : undefined,
+          msTransform: "translateY(".concat(-position * 100, "%)"),
+          WebkitTransform: "translateY(".concat(-position * 100, "%)"),
+          transform: "translateY(".concat(-position * 100, "%)")
+        },
+        key: i
+      }, this.renderNumberList(position));
     }
   }, {
     key: "renderNumberElement",
     value: function renderNumberElement(prefixCls) {
-      var _this2 = this;
+      var _this3 = this;
 
       var count = this.state.count;
 
       if (count && Number(count) % 1 === 0) {
         return getNumberArray(count).map(function (num, i) {
-          return _this2.renderCurrentNumber(prefixCls, num, i);
+          return _this3.renderCurrentNumber(prefixCls, num, i);
         }).reverse();
       }
 

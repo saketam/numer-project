@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import Group from './button-group';
 import { ConfigConsumerProps } from '../config-provider';
-import { Omit } from '../_util/type';
 declare const ButtonTypes: ["default", "primary", "ghost", "dashed", "danger"];
 export declare type ButtonType = (typeof ButtonTypes)[number];
 declare const ButtonShapes: ["circle", "circle-outline", "round"];
@@ -29,11 +28,11 @@ export declare type AnchorButtonProps = {
     href: string;
     target?: string;
     onClick?: React.MouseEventHandler<HTMLAnchorElement>;
-} & BaseButtonProps & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'type'>;
+} & BaseButtonProps & React.AnchorHTMLAttributes<HTMLAnchorElement>;
 export declare type NativeButtonProps = {
     htmlType?: ButtonHTMLType;
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
-} & BaseButtonProps & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'>;
+} & BaseButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>;
 export declare type ButtonProps = AnchorButtonProps | NativeButtonProps;
 interface ButtonState {
     loading?: boolean | {
@@ -48,7 +47,6 @@ declare class Button extends React.Component<ButtonProps, ButtonState> {
         loading: boolean;
         ghost: boolean;
         block: boolean;
-        htmlType: string;
     };
     static propTypes: {
         type: PropTypes.Requireable<string>;
