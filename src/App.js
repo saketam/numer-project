@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import './css/App.css';
 import './css/Navbar.scss'; 
 import './css/TextHeader.scss'; 
+import './css/and.css';
+
 
 
 /*import all content */
@@ -366,12 +368,13 @@ class App extends Component {
             {/*Content App.css */}
             <Content className="Content" >          
               <div id="content" style={{ margin : 20 , minHeight: '70vh' ,}}>
-                  <Bisection12/>
+                  <Home/>
               </div>
             </Content>
 
             <Footer style={{ textAlign: 'center', marginTop: 50 ,bottom : 0 }}>
-              Ant Design ©2018 Created by Ant UED
+              ©2019 Created by Thanapat Sutthiphibool
+              
             </Footer>
 
           </Layout>

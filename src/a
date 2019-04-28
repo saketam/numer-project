@@ -1,0 +1,65 @@
+
+                  Root of Equation
+              
+               Graphical Method
+               Bisection
+               False Position
+               One Point Iteration
+               Newton-Raphson
+               Secant Method
+              
+
+             
+                  Linear Algbraic Equations
+              
+               Cramer’s Rule
+               Gauss Elimination Method
+               Gauss-Jordan Method
+               Matrix Inversion Method
+               LU Decomposition Method 
+               Cholesky Decomposition Method
+               Jacobi Iteration Method
+               Gauss-Seidel Iteration Method
+               Conjugate Gradient Method
+              
+
+              
+                  Interpolation
+              
+               Newton Divide Difference
+               Lagrange
+               Spline
+              
+
+              
+                  Least Square
+              
+               Linear Regression
+               Polynomial Regression
+               Multiple Linear Regression
+              
+
+            
+                  Integration
+              
+               Composite Trapezoidal Rule
+               Composite Simpson's Rule
+              
+
+              
+                  Differentiation
+              
+               Forward Divided-Differences O(h)
+               Backward Divided-Differences O(h)
+               Central Divided-Differences O(h2)
+               Forward Divided-Differences O(h2)
+               Backward Divided-Differences O(h2)
+               Central Divided-Differences O(h4)
+              
+
+              
+                  Ordinary differential equation
+              
+               Euler's Method
+               Heun's Method
+                Modifier Euler's Method

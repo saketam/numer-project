@@ -1,12 +1,210 @@
 import React, { Component } from 'react';
+import 'antd/dist/antd.css';
+import { Card, Input, Button } from 'antd';
 
 
+var A = [], B = [], output = [], matrixA = [], matrixB = []
+const left = {
+    textAlign: "left",
+}
+const mat = {
+    width: "18%",
+    height: "50%",
+    marginInlineEnd: "2%",
+    marginBlockEnd: "2%",
+}
 
 class GJordanM23 extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            dimension: "",
+            showdimensionForm: true,
+            showdimensionButton: true,
+            showMatrixForm: false,
+            showMatrixButton: false,
+            showOutputCard: false,
+            inputtitle: "INPUT DIMENSION",
+        }
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.gaussJ = this.gaussJ.bind(this);
+
+    }
+
+    gaussJ(n) {
+        this.initMatrix();
+        A = []
+        B = []
+        output = []
+
+        this.initMatrix()
+        if (A[0][0] === 0) { //pivoting
+            var tempRow = JSON.parse(JSON.stringify(A[0]));
+            var tempColumn = B[0];
+            A[0] = A[1];
+            A[1] = tempRow;
+            B[0] = B[1];
+            B[1] = tempColumn;
+        }
+        //Forward eliminated
+        for (var k = 0; k < n; k++) {
+            for (var i = k + 1; i < n; i++) {
+                var factor = A[i][k] / A[k][k];
+                for (var j = k; j < n; j++) {
+                    A[i][j] = A[i][j] - factor * A[k][j];
+                }
+                B[i] = B[i] - factor * B[k];
+
+            }
+        }
+
+        //Backward Substitution
+        for (k = n - 1; k >= 0; k--) {
+            for (i = k; i >= 0; i--) {
+
+                if (i === k) {//Identity matrix
+                    factor = 1 / A[i][k];
+
+                    for (j = 0; j < n; j++) {
+                        A[i][j] = A[i][j] * factor;
+                    }
+                    B[i] = B[i] * factor;
+
+
+                }
+                else {
+                    factor = A[i][k] / A[k][k];
+                    for (j = 0; j < n; j++) {
+                        A[i][j] = A[i][j] - factor * A[k][j];
+                    }
+                    B[i] = B[i] - factor * B[k];
+                }
+            }
+        }
+        for (i = 0; i < n; i++) {
+            output.push(<span>X<sub>{i + 1}</sub>=&nbsp;&nbsp;{B[i]}</span>);
+            output.push(<br />)
+        }
+
+        console.log("A" + A)
+        console.log("B" + B)
+
+        this.setState({
+            showOutputCard: true
+        });
+    }
+
+    createMatrix(dimension) {
+
+        A = []
+        B = []
+        matrixA = []
+        matrixB = []
+        output = []
+
+        for (var i = 1; i <= dimension; i++) {
+            for (var j = 1; j <= dimension; j++) {
+                matrixA.push(<Input style={mat}
+                    id={"a" + i + "" + j} key={"a" + i + "" + j} placeholder={"a" + i + "" + j} />)
+            }
+            matrixA.push(<br />)
+
+            matrixB.push(<Input style={mat}
+                id={"b" + i} key={"b" + i} placeholder={"b" + i} />)
+            matrixB.push(<br />)
+        }
+
+        this.setState({
+            showdimensionForm: false,
+            showdimensionButton: false,
+            showMatrixForm: true,
+            showMatrixButton: true
+        })
+
+    }
+    initMatrix() {
+        for (var i = 0; i < this.state.dimension; i++) {
+            A[i] = []
+            for (var j = 0; j < this.state.dimension; j++) {
+                A[i][j] = (parseFloat(document.getElementById("a" + (i + 1) + "" + (j + 1)).value));
+            }
+            B.push(parseFloat(document.getElementById("b" + (i + 1)).value));
+        }
+    }
+    handleInputChange(event) {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    }
+
     render() {
 
         return (
+
             <div>
+                <br />
+                <Card
+                    title={<b>{this.state.inputtitle}</b>}
+                    bordered={true}
+                    onChange={this.handleInputChange}
+                >
+                    {this.state.showdimensionForm &&
+                        <div style={left}>
+                            <span>N x N</span>
+                            <Input name="dimension" placeholder="n"></Input>
+                            <br /><br />
+
+
+
+                        </div>
+                    }
+
+                    {this.state.showMatrixForm &&
+                        <div>
+                            <span>Matrix [A]</span><br />
+                            {matrixA}
+                            <br />
+                            <span>Vector [B]<br /></span>
+                            {matrixB}
+                        </div>
+                    }
+
+                    {this.state.showdimensionButton &&
+                        <Button id="dimension_button" onClick={
+                            () => {
+                                this.createMatrix(this.state.dimension)
+                                this.setState({inputtitle : "INPUT VALUE"})
+                            }
+                        }
+                        >
+                            submit
+                        </Button>
+                    }
+                    <br></br>
+
+                    {this.state.showMatrixButton &&
+                        <Button id="matrix_button" onClick={() => this.gaussJ(this.state.dimension)}>submit</Button>
+                    }
+
+                </Card>
+
+                {this.state.showOutputCard &&
+                    <Card
+                        bordered={true}
+                        style={{ position: 'relative', marginBlockStart: "2%" }}
+
+                        title={<b>OUTPUT</b>}
+
+                        onChange={this.handleInputChange}>
+
+                        <p>{output}</p>
+                    </Card>
+                }
+
+
+
+
 
             </div>
         );
