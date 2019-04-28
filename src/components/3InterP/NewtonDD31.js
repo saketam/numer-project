@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Input, Button, Table } from 'antd';
+import { Card, Input, Button } from 'antd';
 
 const left = {
     textAlign: "left",

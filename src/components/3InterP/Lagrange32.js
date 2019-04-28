@@ -59,16 +59,7 @@ class Lagrange extends Component {
     }
     createTableInput(n) {
         for (var i = 1; i <= n; i++) {
-            x.push(<Input style={{
-                width: "100%",
-                height: "50%",
-                backgroundColor: "black",
-                marginInlineEnd: "5%",
-                marginBlockEnd: "5%",
-                color: "white",
-                fontSize: "18px",
-                fontWeight: "bold"
-            }}
+            x.push(<Input style={mat}
 
                 id={"x" + i} key={"x" + i} placeholder={"x" + i} />);
             y.push(<Input style={mat}

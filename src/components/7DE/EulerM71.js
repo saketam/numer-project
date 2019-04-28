@@ -1,20 +1,30 @@
 import React, { Component } from 'react';
 import { Card, Input, Button, Table } from 'antd';
 import math from 'mathjs';
-
-
-
+import Plot from 'react-plotly.js';
 
 
 const left = {
     textAlign: "left",
 }
+var dataInTable;
+const columns = [
+    {
+        title: "x",
+        dataIndex: "x",
+        key: "x"
+    },
+    {
+        title: "y",
+        key: "y",
+        dataIndex: "y"
+    }
+];
+var X = [], yE = []
+var exactEq=""
 
 
 
-
-
-var fx = " ";
 class EulerM71 extends Component {
     constructor() {
         super()
@@ -25,6 +35,7 @@ class EulerM71 extends Component {
             start: "",
             finish: "",
             h: "",
+            exact: "",
             showOutputCard: false,
             showGraph: false,
         }
@@ -37,71 +48,142 @@ class EulerM71 extends Component {
         //console.log(event.target.name + " -> " + event.target.value)
     }
 
-    SavetoVariable(){
-        fx = this.state.fx;
-        var data  = []
-        data['x'] = []
-        data['y'] = []
-        
-      
-        for (let i=parseInt(this.state.xl) ; i<=parseInt(this.state.xr) ; i++) {
-            data['x'].push(i);
-            data['y'].push(this.func(i));   
-            console.log(typeof(i))      
+    euler(start, finish, x0, y0, h) {
+        X = []
+        yE = []
+        dataInTable = []
+        var y = y0
+        var xi = x0
+        for (let i = start; i < finish; i += h) {
+            y = y + this.func(xi, y,this.state.fx) * h
+            xi += h
+            yE.push(y)
+            X.push(xi)
         }
-        
+        // exactEq = this.func(xi, y,this.state.exact)
+        exactEq     =this.state.exact 
+    
+        this.createTable(X, yE)
+        this.setState({
+            showOutputCard: true,
+            showGraph: true
+        })
     }
 
 
-    func(X) {
-        var expr = math.compile(this.state.fx);
-        let scope = { x: parseFloat(X) };
+    func(X, Y, ffx) {
+        let expr = math.compile(ffx);
+        let scope = { x: parseFloat(X), y: parseFloat(Y) };
+        console.log(ffx  +" "+ expr.eval(scope))
         return expr.eval(scope);
     }
 
     
+
+    createTable(x, y) {
+        dataInTable = []
+        for (let i = 0; i < x.length; i++) {
+            dataInTable.push({
+                x: x[i],
+                y: y[i]
+            });
+        }
+
+    }
+
+
     render() {
-        //const { } = this.props;
+
         return (
-            <div       >
+            <div >
 
                 <br />
 
-                <Card           
-                      
-                    title={<b>INPUT</b>}
-                //onChange={this.handleChange}
+                <Card
 
-           
+
+                    title={<b>INPUT</b>}
+                    onChange={this.handleInputChange}
+
+
                 >
                     <div style={left} >
                         <span>f(x)</span>
-                        <Input name="fx" onChange={this.handleInputChange} placeholder="" />
+                        <Input name="fx"  placeholder="" />
                         <br /><br />
 
                         <span>x<sub>0</sub></span>
-                        <Input name="x0" onChange={this.handleInputChange} placeholder="" />
+                        <Input name="x0"  placeholder="" />
                         <br /><br />
 
                         <span>y<sub>0</sub></span>
-                        <Input name="y0" onChange={this.handleInputChange} placeholder="" />
+                        <Input name="y0"  placeholder="" />
                         <br /><br />
 
                         <span>start</span>
-                        <Input name="start" onChange={this.handleInputChange} placeholder="" />
+                        <Input name="start"  placeholder="" />
                         <br /><br />
 
                         <span>finish</span>
-                        <Input name="finish" onChange={this.handleInputChange} placeholder="" />
+                        <Input name="finish"  placeholder="" />
                         <br /><br />
 
                         <span>h</span>
-                        <Input name="h" onChange={this.handleInputChange} placeholder="" />
+                        <Input name="h"  placeholder="" />
+                        <br /><br />
+
+                        <span>exact equation</span>
+                        <Input name="exact"  placeholder="" />
                         <br /><br />
 
                     </div>
-                    <Button onClick={this.SavetoVariable()}>summit</Button>
+                    <Button onClick={
+                        () => this.euler(parseFloat(this.state.start), parseFloat(this.state.finish), parseFloat(this.state.x0), parseFloat(this.state.y0), parseFloat(this.state.h))
+                    }>summit</Button>
                 </Card>
+
+                {this.state.showGraph &&
+                    <Card
+                        bordered={true}
+                        style={{ position: 'relative', marginBlockStart: "2%" }}
+                    >
+                        <Plot
+                            data={[
+                                {
+                                    x: X,
+                                    y: yE,
+                                    type: 'scatter',
+                                    name: 'euler',
+                                    marker: { color: 'blue' },
+                                },
+                                {
+                                    x: X,
+                                    y: X.map(function (x) {
+                                        return math.compile(exactEq).eval({x: x})
+                                    }),
+                                    type: 'scatter',
+                                    name: 'exact',
+                                    marker: { color: 'red' },
+                                },
+                            ]}
+                            layout={{ title: 'Euler\'s' }}
+                        />
+                    </Card>
+                }
+
+                {this.state.showOutputCard &&
+                    <Card
+                        title={<b>OUTPUT</b>}
+                        bordered={true}
+                        style={{ position: 'relative', marginBlockStart: "2%" }}
+                        id="outputCard"
+                    >
+                        <Table columns={columns}
+                            bordered={true}
+                            dataSource={dataInTable}
+                        ></Table>
+                    </Card>
+                }
 
 
 
