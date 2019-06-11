@@ -6,8 +6,6 @@ import './css/Navbar.scss';
 import './css/TextHeader.scss'; 
 import './css/and.css';
 
-
-
 /*import all content */
 import Home from './components/Home';
 
@@ -61,10 +59,7 @@ import { Layout, Menu, Icon} from 'antd';
 const { Sider ,Header, Content, Footer} = Layout;
 const SubMenu = Menu.SubMenu;
 
-
 class App extends Component {
-
-
   changepage = (props) =>{
     console.log(props.key)
 
@@ -97,9 +92,6 @@ class App extends Component {
       this.setState({header_color:"violet" ,header_text:"Secant Method"});     
       ReactDOM.render(<Secant16></Secant16>, document.getElementById("content"));
     }
-
-
-
     else if (props.key.localeCompare("21") === 0) {
       this.setState({header_color:"indigo" ,header_text:"Cramer’s Rule"});     
       ReactDOM.render(<Cramer21></Cramer21>, document.getElementById("content"));    
@@ -136,8 +128,6 @@ class App extends Component {
       this.setState({header_color:"indigo" ,header_text:"Conjugate Gradient Method"});     
       ReactDOM.render(<ConjugateGM29></ConjugateGM29>, document.getElementById("content"));    
     }
-
-
     else if (props.key.localeCompare("31") === 0) {
       this.setState({header_color:"blue" ,header_text:"Newton Divide Difference"});     
       ReactDOM.render(<NewtonDD31></NewtonDD31>, document.getElementById("content"));    
@@ -150,9 +140,6 @@ class App extends Component {
       this.setState({header_color:"blue" ,header_text:"Spline"});     
       ReactDOM.render(<Spline33></Spline33>, document.getElementById("content"));    
     }
-
-
-
     else if (props.key.localeCompare("41") === 0) {
       this.setState({header_color:"green" ,header_text:"Linear Regression"});     
       ReactDOM.render(<LinearR41></LinearR41>, document.getElementById("content"));    
@@ -165,9 +152,6 @@ class App extends Component {
       this.setState({header_color:"green" ,header_text:"Multiple Linear Regression"});     
       ReactDOM.render(<MultiLinearR43></MultiLinearR43>, document.getElementById("content"));    
     }
-
-
-
     else if (props.key.localeCompare("51") === 0) {
       this.setState({header_color:"yellow" ,header_text:"Composite Trapezoidal Rule"});     
       ReactDOM.render(<ComTrapeR51></ComTrapeR51>, document.getElementById("content"));    
@@ -176,8 +160,6 @@ class App extends Component {
       this.setState({header_color:"yellow" ,header_text:"Composite Simpson's Rule"});     
       ReactDOM.render(<ComSimpsonR52></ComSimpsonR52>, document.getElementById("content"));    
     }
-
-
     else if (props.key.localeCompare("61") === 0) {
       this.setState({header_color:"orange" ,header_text:"Forward Divided-Differences O(h)"});     
       ReactDOM.render(<ForwardOH61></ForwardOH61>, document.getElementById("content"));    
@@ -202,9 +184,6 @@ class App extends Component {
       this.setState({header_color:"orange" ,header_text:"Central Divided-Differences O(h4)"});     
       ReactDOM.render(<CentralOH466></CentralOH466>, document.getElementById("content"));    
     }
-
-
-
     else if (props.key.localeCompare("71") === 0) {
       this.setState({header_color:"red" ,header_text:"Euler's Method"});     
       ReactDOM.render(<EulerM71></EulerM71>, document.getElementById("content"));    
@@ -216,12 +195,7 @@ class App extends Component {
     else if (props.key.localeCompare("73") === 0) {
       this.setState({header_color:"red" ,header_text:"Modifier Euler's Method"});     
       ReactDOM.render(<ModifierEulerM73></ModifierEulerM73>, document.getElementById("content"));    
-    }
-
-
-
-
-    
+    }   
   }
 
   state = {
@@ -234,11 +208,8 @@ class App extends Component {
     console.log(collapsed);
     this.setState({ collapsed });
   }
-
-
+      
   render() {
-
-
     return (
       <div className="App" >
         <Starfield />
@@ -378,15 +349,9 @@ class App extends Component {
             </Footer>
 
           </Layout>
+                                                                  
         </Layout>
-        
-
-
-
-
-
-
-
+                                                                  
       </div>
     );
   }
