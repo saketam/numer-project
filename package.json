@@ -10,7 +10,7 @@
     "jquery": "^3.3.1",
     "mathjs": "^5.7.0",
     "mathjs-simple-integral": "^0.1.1",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "plotly.js": "^1.47.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
